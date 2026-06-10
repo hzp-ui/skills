@@ -1,0 +1,27 @@
+{
+  "name": "api-batch-tester",
+  "version": "3.0.0",
+  "scene": "API接口批量测试",
+  "category": "开发提效",
+  "subtitle": "手动测API太慢？自动发送请求验证接口返回是否正确",
+  "target_user": "后端开发、测试工程师、API 设计师",
+  "core_need": "自动化 API 回归测试",
+  "trigger_words": [
+    "API测试",
+    "接口测试",
+    "测试API"
+  ],
+  "output_format": "Markdown 测试报告 + 用例清单",
+  "priority": "P2",
+  "tools": [
+    "write_to_file",
+    "read_file",
+    "execute_command"
+  ],
+  "dependencies": [
+    "api-tester"
+  ],
+  "real_objects": "API spec 文件（read_file）、测试脚本（execute_command）",
+  "deliverables": "测试报告（Markdown）、测试用例集",
+  "need_external_search": "否"
+}

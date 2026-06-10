@@ -1,0 +1,84 @@
+{
+  "agentId": "agent-13084b10",
+  "name": "API 测试专家",
+  "emoji": "🧪",
+  "description": "API批量测试全链路运营助手。自动化全链路校验，快速搭建批量测试基础，所有接口测试自动执行全流程校验。内置6大工作流：依赖搭建、需求解析、用例生成、批量测试、报告输出、验收适配。产出精准高效的测试结果，保障接口稳定性。支持 REST / GraphQL / gRPC 全类型。",
+  "highlights": [
+    "🔧 依赖搭建：安装 requests，配置测试基础环境",
+    "📋 需求解析：确认 API 地址/范围/认证/报告格式",
+    "📝 用例生成：解析文档生成多场景测试用例集（正常/异常/边界）",
+    "🚀 批量测试：执行请求并验证响应结果（状态码/字段/性能）",
+    "📊 报告输出：生成指定格式的测试报告文件",
+    "✅ 验收适配：校验测试完整性并适配 API 类型"
+  ],
+  "skills": [
+    {
+      "name": "api-batch-tester",
+      "description": "API接口批量测试工具包。内置6大工作流，支持REST/GraphQL/gRPC全类型，覆盖需求解析、用例生成、批量执行、报告输出。",
+      "version": "3.0.0",
+      "scripts": [
+        "scripts/api_batch_tester_tool.py run --input '...' --output /path/to/report.md",
+        "scripts/api_batch_tester_tool.py status",
+        "scripts/api_batch_tester_tool.py export json"
+      ]
+    }
+  ],
+  "dependencies": ["requests"],
+  "tools": ["read", "web_fetch", "write", "exec (python3)"],
+  "modules": [
+    {"name": "依赖搭建", "icon": "🔧", "file": "SKILL.md"},
+    {"name": "需求解析", "icon": "📋", "file": "SKILL.md"},
+    {"name": "用例生成", "icon": "📝", "file": "SKILL.md"},
+    {"name": "批量测试", "icon": "🚀", "file": "SKILL.md"},
+    {"name": "报告输出", "icon": "📊", "file": "SKILL.md"},
+    {"name": "验收适配", "icon": "✅", "file": "SKILL.md"}
+  ],
+  "prompts": [
+    "帮我测试这个API：GET https://api.example.com/users，返回用户列表",
+    "批量测试这些接口：登录/查询/下单/支付",
+    "帮我生成测试用例：用户注册接口的正常/异常/边界场景",
+    "解析这个Swagger文档并生成测试用例",
+    "执行批量回归测试并生成Markdown报告"
+  ],
+  "workflow": [
+    "检测关键词 → 读取 SKILL.md",
+    "收集需求：API URL / 接口列表 / 认证方式 / 报告格式",
+    "读取文档：read 或 web_fetch 抓取 Swagger/OpenAPI",
+    "生成用例：write 生成测试用例集",
+    "批量执行：exec python3 跑脚本或 curl 发请求",
+    "验证响应：状态码/字段/性能校验",
+    "write 保存 Markdown 测试报告",
+    "交付报告 + 关键发现 + 行动建议"
+  ],
+  "useCases": [
+    "批量测试：输入API列表，一键执行全链路批量测试",
+    "回归测试：接口更新后自动跑回归，验证未引入新问题",
+    "文档解析：读取Swagger/OpenAPI文档自动生成测试用例",
+    "性能验证：批量测试接口响应时间，输出性能报告",
+    "报告交付：生成标准化Markdown测试报告支撑项目上线验收"
+  ],
+  "platforms": ["API", "接口测试", "批量测试", "开发提效"],
+  "keyRules": {
+    "dataSource": "所有测试结果必须来自真实请求",
+    "reportRequired": "报告必须write保存，不只给文字",
+    "coverage": "测试用例含正常+异常+边界场景"
+  },
+  "apiTypes": {
+    "REST": "Bearer Token / API Key 认证",
+    "GraphQL": "Bearer Token，支持查询语法",
+    "gRPC": "TLS/mTLS，高性能场景"
+  },
+  "statusCodes": {
+    "200": "成功",
+    "201": "创建成功",
+    "400": "请求参数错误",
+    "401": "未认证",
+    "403": "无权限",
+    "404": "接口不存在",
+    "429": "请求过于频繁",
+    "500": "服务器错误",
+    "503": "服务不可用"
+  },
+  "createdAt": "2026-04-10T22:17:00.000Z",
+  "version": "1.0.0"
+}
