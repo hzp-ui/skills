@@ -1,0 +1,143 @@
+{
+  "$schema": "https://developers.weixin.qq.com/miniprogram/dev/ai/schema/mcp.json",
+  "comment": "微信小程序 AI SKILL MCP 声明模板",
+  "apis": [
+    {
+      "name": "getRecommendedItems",
+      "description": "获取推荐列表（业务对象：推荐项卡片）。\n调用前置条件：用户表达模糊意图但未指定具体项（如「有什么推荐」「看看有什么」）。\n【严禁】用户已说出具体名称时，禁止调用本接口。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "scenario": {
+            "type": "string",
+            "description": "使用场景。取值：'default'（默认）/ 'categoryA'（A类）/ 'categoryB'（B类）。用户未明确时留空走 default。",
+            "enum": ["default", "categoryA", "categoryB"]
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "推荐项列表",
+            "items": {
+              "type": "object",
+              "properties": {
+                "itemId": { "type": "string", "description": "唯一标识 ID" },
+                "name": { "type": "string", "description": "名称" },
+                "price": { "type": "number", "description": "价格（元）" },
+                "description": { "type": "string", "description": "简介" }
+              }
+            }
+          },
+          "total": { "type": "number", "description": "总数" },
+          "hasMore": { "type": "boolean", "description": "是否有更多" }
+        }
+      },
+      "_meta": { "ui": { "componentPath": "components/recommended-list/index" } }
+    },
+    {
+      "name": "searchItems",
+      "description": "按关键词检索列表（业务对象：搜索结果卡片）。\n调用前置条件：用户说出了具体名称或分类关键词。\n【严禁】用户仅表达模糊意图时，禁止调用本接口，应调用 getRecommendedItems。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "description": "搜索关键词，取自用户原话。【禁止编造】用户未提供时禁止填写。"
+          }
+        },
+        "required": ["keyword"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "匹配的列表",
+            "items": {
+              "type": "object",
+              "properties": {
+                "itemId": { "type": "string" },
+                "name": { "type": "string" },
+                "price": { "type": "number" }
+              }
+            }
+          },
+          "total": { "type": "number" },
+          "hasMore": { "type": "boolean" }
+        }
+      },
+      "_meta": { "ui": { "componentPath": "components/recommended-list/index" } }
+    },
+    {
+      "name": "selectItem",
+      "description": "查看详情及规格（业务对象：详情卡片）。\n调用前置条件：已从 getRecommendedItems / searchItems 获取到有效的 itemId。\n【严禁】禁止在未获得有效 itemId 时调用，禁止从用户语言推断 itemId。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "description": "唯一标识，必须来自上游接口返回的 items[].itemId。【禁止编造】"
+          }
+        },
+        "required": ["itemId"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "itemId": { "type": "string" },
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" },
+          "specOptions": {
+            "type": "object",
+            "description": "可选规格维度，key 为维度 key"
+          }
+        }
+      },
+      "_meta": { "ui": { "componentPath": "components/detail-card/index" } }
+    },
+    {
+      "name": "confirmAction",
+      "description": "确认操作并生成记录（业务对象：确认卡片）。\n调用前置条件：已调用 selectItem 成功获取到详情。\n【严禁】禁止未经 selectItem 直接调用。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "description": "必须来自上一步 selectItem 返回。【禁止编造】"
+          },
+          "specs": {
+            "type": "object",
+            "description": "规格对象，必须使用英文枚举值。"
+          }
+        },
+        "required": ["itemId", "specs"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "recordId": { "type": "string", "description": "记录 ID" },
+          "status": { "type": "string", "description": "状态" }
+        }
+      },
+      "_meta": { "ui": { "componentPath": "components/confirm-card/index" } }
+    }
+  ],
+  "components": [
+    {
+      "path": "components/recommended-list/index",
+      "relatedPage": "/packageDetail/pages/item-list"
+    },
+    {
+      "path": "components/detail-card/index",
+      "relatedPage": "/packageDetail/pages/item-detail"
+    },
+    {
+      "path": "components/confirm-card/index",
+      "relatedPage": "/packageDetail/pages/confirm"
+    }
+  ]
+}

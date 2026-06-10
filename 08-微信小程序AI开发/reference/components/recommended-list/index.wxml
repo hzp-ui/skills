@@ -1,0 +1,40 @@
+<view class="rec-card">
+  <view class="rec-header">
+    <view class="rec-title">{{title}}</view>
+    <view wx:if="{{total > 0}}" class="rec-sub">{{total}} 款</view>
+  </view>
+
+  <block wx:if="{{items.length > 0}}">
+    <view class="rec-list">
+      <view
+        wx:for="{{items}}"
+        wx:key="itemId"
+        class="rec-item"
+        hover-class="rec-item-hover"
+        bind:tap="onTapItem"
+        data-item="{{item}}"
+      >
+        <image class="rec-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="rec-info">
+          <view class="rec-name">{{item.name}}</view>
+          <view wx:if="{{item.description}}" class="rec-desc">{{item.description}}</view>
+          <view class="rec-foot">
+            <view class="rec-cat">{{item.categoryName}}</view>
+            <view class="rec-price">¥{{item.price}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="rec-empty">
+      <view class="rec-empty-title">没有匹配的结果</view>
+      <view class="rec-empty-sub">换个关键词试试</view>
+    </view>
+  </block>
+
+  <view wx:if="{{hasMore || items.length === 0}}" class="rec-more" hover-class="rec-more-hover" bind:tap="onTapMore">
+    <view class="rec-more-text">{{items.length === 0 ? '查看全部' : '查看全部 →'}}</view>
+  </view>
+</view>
